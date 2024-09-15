@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: game.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: game.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>const canvas = document.getElementById('canvas');
+const introScreen = document.getElementById('introScreen');
+const winLoseButtons = document.getElementById('winLoseButtons')
+const keyboardInfo = document.getElementById('keyboardInfo');
+const mobileButtons = document.getElementById('mobileButtonsArea');
+const legalNotice = document.getElementById('legalNotice');
+const mobileText  = document.getElementById('mobileText')
+const buttonsArea = document.getElementById('buttonsArea')
+const mobileTurnDevice = document.getElementById('mobileTurnDevice')
+let world;
+let keyboard = new Keyboard()
+
+
+
+/**
+ * Initializes the game by setting up the level, showing the canvas, hiding the intro screen,
+ * managing sound and images, and enabling the sound button.
+ */
+function init() {
+  initLevel();
+  canvas.style.display = 'block';
+  introScreen.style.display = 'none';
+  winLoseButtons.classList.add('d-none');
+  setContext();
+  storeOriginalVolumes();
+  checkWinOrLose();
+  enableSoundButton();
+  changeImgToStopGame();
+}
+
+/**
+ * Sets the 2D drawing context for the canvas and initializes the game world.
+ */
+function setContext() {
+  ctx = canvas.getContext("2d");
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  world = new World(canvas, keyboard);
+}
+
+/**
+ * Stops the game by clearing all intervals, displaying the start screen,
+ * hiding the canvas, and updating the game image.
+ */
+function stopGame() {
+  clearAllIntervals();
+  introScreen.src = 'img/9_intro_outro_screens/start/startscreen_2.png';
+  introScreen.style.display = 'flex';
+  canvas.style.display = 'none';
+  winLoseButtons.classList.add('d-none');
+  changeImgToStartGame();
+}
+
+/**
+ * Periodically checks the win or lose conditions every 300 milliseconds.
+ * If the win condition is met (the end boss is dead), the win screen is displayed.
+ * If the lose condition is met (the character is dead), the lose screen is displayed.
+ */
+function checkWinOrLose() {
+  setInterval(() => {
+    playWinScreen();
+    playLoseScreen();
+  }, 300);
+}
+
+/**
+ * Checks if the win condition is met (end boss is dead).
+ * If true, plays the win sound, stops all intervals, and displays the win screen after a delay.
+ */
+function playWinScreen() {
+  if (world.endboss.enemyIsDead) {
+    playSound(youWinAudio, 0.2);
+    clearAllIntervals();
+    setTimeout(() => {
+      showWinScreen();
+    }, 800);
+  }
+}
+
+/**
+ * Checks if the lose condition is met (character is dead).
+ * If true, plays the lose sound, stops all intervals, and displays the lose screen after a delay.
+ */
+function playLoseScreen() {
+  if (world.character.pepeIsDead) {
+    playSound(youLoseAudio, 0.05);
+    clearAllIntervals();
+    setTimeout(() => {
+      showLoseScreen();
+    }, 800);
+  }
+}
+
+/**
+ * Clears all intervals that have been set with `setInterval`.
+ */
+function clearAllIntervals() {
+  for (let i = 1; i &lt; 9999; i++) {
+    window.clearInterval(i);
+  }
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#changeImgToStartGame">changeImgToStartGame</a></li><li><a href="global.html#changeImgToStopGame">changeImgToStopGame</a></li><li><a href="global.html#checkInnerWidth">checkInnerWidth</a></li><li><a href="global.html#checkWinOrLose">checkWinOrLose</a></li><li><a href="global.html#clearAllIntervals">clearAllIntervals</a></li><li><a href="global.html#disableSoundButton">disableSoundButton</a></li><li><a href="global.html#enableSoundButton">enableSoundButton</a></li><li><a href="global.html#hideLegalNoticeOnClickOutside">hideLegalNoticeOnClickOutside</a></li><li><a href="global.html#init">init</a></li><li><a href="global.html#isTouchDevice">isTouchDevice</a></li><li><a href="global.html#outsideClickListener">outsideClickListener</a></li><li><a href="global.html#playLoseScreen">playLoseScreen</a></li><li><a href="global.html#playSound">playSound</a></li><li><a href="global.html#playWinScreen">playWinScreen</a></li><li><a href="global.html#setContext">setContext</a></li><li><a href="global.html#showChangeScreen">showChangeScreen</a></li><li><a href="global.html#showLegalNotice">showLegalNotice</a></li><li><a href="global.html#showLoseScreen">showLoseScreen</a></li><li><a href="global.html#showMobileButtons">showMobileButtons</a></li><li><a href="global.html#showNormalScreen">showNormalScreen</a></li><li><a href="global.html#showWinScreen">showWinScreen</a></li><li><a href="global.html#soundOff">soundOff</a></li><li><a href="global.html#soundOn">soundOn</a></li><li><a href="global.html#stopGame">stopGame</a></li><li><a href="global.html#storeOriginalVolumes">storeOriginalVolumes</a></li><li><a href="global.html#toggleFullscreen">toggleFullscreen</a></li><li><a href="global.html#toggleKeyBoardInfo">toggleKeyBoardInfo</a></li><li><a href="global.html#toggleSound">toggleSound</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.3</a> on Sun Aug 25 2024 12:41:11 GMT+0200 (Mitteleuropäische Sommerzeit)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

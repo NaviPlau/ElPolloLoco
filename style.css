@@ -1,0 +1,307 @@
+@font-face {
+  font-family: 'rugged';
+  src: url('fonts/superRugged.ttf') format('truetype'); 
+}
+
+body{
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  height: 100vh;
+  width: 100vw;
+  align-items: center;
+  justify-content: center;
+  background-image: url(img/9_intro_outro_screens/desert-2774945_1280.jpg);
+  background-size: cover;
+  background-position: 40%;
+  gap: 20px;
+  font-family: 'rugged', Arial, Helvetica, sans-serif;
+  scrollbar-width: none;
+  box-sizing: border-box;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+#canvas{
+  background-color: black;
+  display: block;
+}
+
+
+.overlay{
+  position: absolute;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  background-image: url(img/9_intro_outro_screens/desert-2774945_1280.jpg);
+  background-size: cover;
+  background-position: 40%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px
+}
+.introScreen{
+  width: 720px;
+  height: 480px;
+}
+h2, h1{
+  margin: 0;
+}
+
+h1 {
+  font-size: 70px;
+  background: linear-gradient(to right, #C6642E, #FFDF00);
+  -webkit-background-clip: text; 
+  -webkit-text-fill-color: transparent; 
+  background-clip: text; 
+  color: black; 
+}
+.startButton{
+  background-color: #C6642E;
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+  color: #FFDF00;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  
+}
+.startButton img{
+  width: 32px;
+  height: 32px;
+  box-sizing: border-box;
+}
+.stopGame{
+  background-color: #C6642E;
+  width: fit-content;
+  border-radius: 20px;
+  cursor: pointer;
+  color: #FFDF00;
+  height: 32px;
+  width: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+}
+
+.soundButton{
+  display: flex;
+  gap: 16px;
+}
+
+.soundButton img { 
+  width: 22px;
+  height: 22px;
+  animation: sound infinite  0.8s ;
+}
+
+.fullscreen{
+  background-color: transparent;
+  border: none;
+}
+
+.fullscreen img{
+  width: 24px;
+  height: 24px;
+}
+
+
+.keyboard{
+  position: absolute;
+  top: 8%;
+  left: 56%;
+  background-color: #C6642E;
+  color: #FFDF00;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  border-radius: 20px;
+}
+
+
+
+@keyframes sound {
+  0% {
+    transform: scale(0.9);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(0.9);
+  }
+}
+.buttonsArea{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  left: 57%;
+}
+
+
+.mobileButton{
+  touch-action: manipulation;
+  width: fit-content;
+  height: fit-content;
+  padding: 0;
+  border: 1px solid #FFDF00;
+  border-radius: 10px;
+  box-sizing: border-box;
+  
+}
+.mobileButton img {
+  width: 32px;
+  height: 32px;
+  object-fit: cover; 
+  object-position: center 78%;
+  display: block;
+}
+
+.mobileButtonsArea{
+  display: flex;
+  justify-content: space-between;
+  position: absolute;
+  box-sizing: border-box;
+  width: 100%;
+  bottom: 10px;
+  padding: 0px 20px;
+}
+
+.moveButtons{
+  display: flex;
+  gap: 20px;
+}
+.jumpButton{
+ position: absolute;
+ right: 45px;
+ bottom: 50px;
+}
+.throwButton{
+  position: absolute;
+  right: 70px;
+}
+
+.winLoseButtons{
+  position: absolute;
+  top: 50%;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  justify-content: space-around;
+  width: 100%;
+}
+
+
+.home{
+  border: 1px solid #FFDF00;
+  background-color: #C6642E;
+  border-radius: 20px;
+  padding: 5px 10px;
+  color: #FFDF00;
+  cursor: pointer;
+}
+
+
+
+
+.fullImage {
+  width: 100vw; 
+  height: 100vh; 
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: #000; 
+  z-index: 1000; 
+}
+
+#fullScreenIcon:hover{
+  cursor: pointer;
+  scale: 1.1;
+}
+
+.displayFullScreen{
+  width: 100vw;
+  height: 100vh;
+}
+.mobileText{
+  position: absolute;
+  top: 20%;
+  width: 150px;
+  left: 20%;
+}
+
+
+.legalNotice{
+  width: fit-content
+}
+.legalNotice:hover{
+  cursor: pointer;
+  scale: 1.1;
+  
+}
+.legalInfo{
+  position: absolute;
+  padding: 10px;
+  border-radius: 20px;
+  left: 30%;
+  top: 20%;
+  width: 300px;
+  height: 300px;
+  overflow-y: auto;
+  background-color: #C6642E;
+}
+
+.mobileTurnImage img{
+  position: absolute;
+  width: 50px;
+  height: 90px;
+  top: 50%;
+  left: 40%;
+  transform-origin: center;
+  animation: turnDevice 2s ease-in-out forwards infinite; 
+}
+
+@keyframes turnDevice {
+  from {
+    transform: rotate(0deg); 
+  }
+  to {
+    transform: rotate(90deg); 
+  }
+}
+
+@media only screen  and (max-width:720px){
+  .overlay, canvas, #introScreen{
+    width: 100%;
+  }
+  h1{
+    font-size: 60px;
+  }
+  
+}
+
+@media only screen  and (max-height:600px){
+  h1{
+    display: none;
+  }
+}
+@media only screen  and (max-height:500px){
+  .overlay, canvas, #introScreen{
+    height: 100vh;
+  }
+}
+
+
+
+.d-none{
+  display: none;
+}

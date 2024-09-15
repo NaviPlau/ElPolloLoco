@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en" translate="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>El Polo Loco</title>
+  <link rel="icon" type="image/x-icon" href="img/2_character_pepe/2_walk/W-22.png">
+  <link rel="stylesheet" href="style.css">
+  <script src="classes/drawable-object.class.js"></script>
+  <script src="classes/movable-object.class.js"></script>
+  <script src="classes/status-bar.class.js"></script>
+  <script src="classes/coin-bar.class.js"></script>
+  <script src="classes/boss_hp_bar.class.js"></script>
+  <script src="classes/coin.class.js"></script>
+  <script src="classes/throwable_bottle.class.js"></script>
+  <script src="classes/bottle-ground.class.js"></script>
+  <script src="classes/bottle_bar.class.js"></script>
+  <script src="classes/keyboard.class.js"></script>
+  <script src="classes/character.class.js"></script>
+  <script src="classes/chicken.class.js"></script>
+  <script src="classes/small-chicken.class.js"></script>
+  <script src="classes/world.class.js"></script>
+  <script src="classes/clouds.class.js"></script>
+  <script src="classes/background.class.js"></script>
+  <script src="classes/level.class.js"></script>
+  <script src="classes/endboss.class.js"></script>
+  <script src="levels/level1.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/mobile_fullscreen.js"></script>
+  <script src="js/start_end_screens.js"></script>
+</head>
+<body onload="checkInnerWidth()">
+  <div class="overlay" id="overlay"> 
+    <h1 id="gametitle">El Polo Loco</h1>
+    <div style="position: relative; display: flex;" id="fullImage">
+      <div class="mobileText" id="mobileText"><h2>You want to play this game? Turn your phone!</h2></div>
+      <div class="mobileTurnImage" id="mobileTurnDevice"><img src="img/9_intro_outro_screens/iphone-160307_1280.png" alt=""></div>
+      <div class="buttonsArea" id="buttonsArea">
+          <div id="startStopGame"><button class="startButton " onclick="init()"><img src="img\9_intro_outro_screens\919983_end_play_preview_start_icon.png" alt=""></button></div>
+          <button id="soundButton" disabled class="stopGame soundButton" onclick="toggleSound()">
+            <img id="soundImage" src="img/9_intro_outro_screens/loudspeaker-158394_640.png" alt="">
+          </button>
+          <button class="startButton" onclick="toggleKeyBoardInfo(event)"> 
+            <img src="img/9_intro_outro_screens/question-mark-909830_640.png" alt="">
+          </button>
+          <button id="fullscreenButton" onclick="toggleFullscreen()" style="z-index: 22;" class="fullscreen"><img id="fullScreenIcon" src="img/9_intro_outro_screens/expand.png" alt=""></button>
+        </div>
+        <img id="introScreen" class="introScreen" src="img/9_intro_outro_screens/start/startscreen_1.png" alt="">
+        <canvas width="720" height="480" id="canvas" style="display: none;" class="canvas"></canvas>
+        <div class="keyboard d-none" id="keyboardInfo">
+          <div>A/Left Arrow = Left</div>
+          <div>W/Up Arrow = Jump</div>
+          <div>S/Down Arrow = Down</div>
+          <div>D/Right Arrow = Right</div>
+          <div>F = Throw</div>
+          <div class="legalNotice" onclick="showLegalNotice(), event.stopPropagation()">§ Legal Notice </div>
+        </div>
+        <div class=" mobileButtonsArea" id="mobileButtonsArea">
+          <div class="moveButtons">
+            <button class="mobileButton" id="btnLeft"> <img style="transform: scaleX(-1);" src="img/2_character_pepe/1_idle/idle/I-1.png" alt=""> </button>
+            <button class="mobileButton" id="btnRight"> <img src="img/2_character_pepe/1_idle/idle/I-1.png" alt=""></button>
+          </div>
+          <div >
+            <button class="mobileButton jumpButton" id="btnJump"><img src="img\2_character_pepe\3_jump\J-34.png" alt=""></button>
+            <button class="mobileButton" id="btnDown"><img src="img\2_character_pepe\3_jump\J-36.png" alt=""></button>
+            <button class="mobileButton throwButton" id="btnThrow"><img src="img\6_salsa_bottle\salsa_bottle.png" alt=""></button>
+          </div>
+        </div>
+        <div id="winLoseButtons" class="winLoseButtons d-none">
+          <button class="home" onclick="stopGame()"><h2>Home</h2></button>
+          <Button class="home" onclick="init()"><h2>Restart</h2></Button>
+        </div>
+        <div id="legalNotice" class="legalInfo d-none"><h2>Legal Disclosure (Impressum)</h2>
+          <br>	
+          <p>
+              Information obligation according to §5 of the E-Commerce Act and disclosure obligation according to §25 of the Media Act
+          </p>
+          <p>
+              Ivan Paul		<br>
+              Hauptstraße 30 Top4		<br>
+              4020 Linz		<br>
+              Austria	
+          </p>
+          <p>
+              Tel: +43 (0)6609664428		<br>		
+              Fax: +43 (0)316/123456789		<br>		
+              E-Mail: <a href="mailto:naviplau%40outlook.de">naviplau@outlook.de</a>	
+          </p>
+          
+          <br>
+          <div id="email_kooperatioen"> 
+              <h2>
+                  Permission for Unsolicited Submissions
+              </h2>	
+              <p>
+                  You have temporary permission to send us unsolicited submissions in the form of advertisements for your products, cooperation requests, or partnership inquiries. A dedicated email inbox has been set up for this purpose, which you can reach at <a href="mailto:max.mustermann%40domain.at">max.mustermann@domain.at</a>. This inbox comes with temporary consent from the recipient to receive informational material until revoked. Any revocation will result in no further submissions or contact from the time of notification.
+              </p>
+          </div>	
+          
+          <br>
+          <div id="haftung_links"> 
+              <h2>
+                  Disclaimer for External Links
+              </h2>
+              <p>
+                  This website contains, like many other websites, so-called links to other, external websites and content. This is considered a fundamental concept of the Internet and global information exchange. Legally and technically, we as the operators of this website have no influence on the design and content of the linked external websites. For this reason, we can in no way assume liability or warranty for these websites at any time, as they are under the responsibility of the respective operators.
+              </p>
+              <p>
+                  At the time of linking, the external content was checked for functionality, illegal content, and, as far as possible, for malware. As an indication, you will find a date stamp on some links that refer to the time of the link's creation. Nevertheless, we strive to protect our visitors from illegal content and malware by periodically checking the links in random intervals. In the event of legal violations, the links will of course be removed immediately.
+              </p>
+              <p>
+                  If you discover such a link before our review, please notify us immediately using the contact information provided in this legal disclosure. Please provide us with the link on our website that contains the questionable reference, as well as the type of issue (a) illegal content, b) malware, or c) inactive content or reference.
+              </p>
+              <p>
+                Sound Effect from <a href="https://pixabay.com/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=43768">Pixabay</a>><br>
+                Sound Effect from <a href="https://pixabay.com/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=37243">Pixabay</a>><br>
+                Sound Effect from <a href="https://pixabay.com/sound-effects/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=47509">Pixabay</a>><br>
+                Sound Effect by <a href="https://pixabay.com/users/u_r7cny11q7r-41888232/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=186763">u_r7cny11q7r</a> from <a href="https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=186763">Pixabay</a>><br>
+                Sound Effect from <a href="https://pixabay.com/sound-effects/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=47664">Pixabay</a>><br>
+                Sound Effect from <a href="https://pixabay.com/sound-effects/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=61964">Pixabay</a>><br>
+                Sound Effect from <a href="https://pixabay.com/sound-effects/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=6385">Pixabay</a>><br>
+                Sound Effect from <a href="https://pixabay.com/sound-effects/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=14678">Pixabay</a>><br>
+                Sound Effect from <a href="https://pixabay.com/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=6056">Pixabay</a>><br>
+                Sound Effect by <a href="https://pixabay.com/users/ribhavagrawal-39286533/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=230514">Ribhav Agrawal</a> from <a href="https://pixabay.com/sound-effects//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=230514">Pixabay</a><br>
+                Sound Effect by <a href="https://pixabay.com/users/soundreality-31074404/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=205581">Jurij</a> from <a href="https://pixabay.com/sound-effects//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=205581">Pixabay</a>><br>
+                Sound Effect from <a href="https://pixabay.com/sound-effects/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=100155">Pixabay</a>><br>
+                Image by <a href="https://pixabay.com/users/photo-graphe-2867425/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=2774945">Patou Ricard</a> from <a href="https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=2774945">Pixabay</a>><br>
+                Image by <a href="https://pixabay.com/users/openclipart-vectors-30363/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=158394">OpenClipart-Vectors</a> from <a href="https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=158394">Pixabay</a>><br>
+                Image by <a href="https://pixabay.com/users/openclipart-vectors-30363/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=145677">OpenClipart-Vectors</a> from <a href="https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=145677">Pixabay</a>><br>
+                Image by <a href="https://pixabay.com/users/clker-free-vector-images-3736/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=33738">Clker-Free-Vector-Images</a> from <a href="https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=33738">Pixabay</a>><br>
+                Image by <a href="https://pixabay.com/users/clker-free-vector-images-3736/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=33743">Clker-Free-Vector-Images</a> from <a href="https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=33743">Pixabay</a>><br>
+                Image by <a href="https://pixabay.com/users/openclipart-vectors-30363/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=160307">OpenClipart-Vectors</a> from <a href="https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=160307">Pixabay</a>><br>
+                <a href="https://www.flaticon.com/free-icons/screen-settings" title="screen-settings icons">Screen-settings icons created by Afian Rochmah Afif - Flaticon</a>><br>
+                <a href="https://www.flaticon.com/free-icons/collapse" title="collapse icons">Collapse icons created by pojok d - Flaticon</a><br>
+              </p>
+          </div>
+          
+          <br>
+          <div id="ihre_rechte"> 
+              <h2>
+                  Your Rights
+              </h2>
+              <p>
+                  You have the rights to information, correction, deletion, restriction, data portability, revocation, and objection regarding your data stored with us. If you believe that the processing of your data violates data protection law or that your data protection rights have otherwise been violated in any way, you can contact us at the email address listed above or file a complaint with your data protection authority.
+              </p>
+          </div>
+          
+          <br>
+          <div id="erstelltmit">
+              <p>
+                  <small>Generated with the free and easy-to-use <a href="https://idigit.onl/" target="_blank">Impressum Generator von idigIT e.U.</a></small>
+              </p>
+        </div>
+      </div>
+         
+    </div>
+  </div>
+  <script src="js/game.js"></script>
+
+</body>
+</html>
+
+
+
